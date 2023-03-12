@@ -19,7 +19,7 @@ def main():
             - opcion(tipo : entero): solo toma 3 valores distintos:
                 1) onda cuadrada
                 2) onda triangular. 
-                3) onda de sierra
+                3) onda dientes de sierra
         
         b) grafica(x,y,nombre)
             Donde:
@@ -40,13 +40,13 @@ def main():
         print('\033[31m' + '    =============================' + '\033[0m')
         print('\033[32m' + '        1) Onda Cuadrada' + '\033[0m')
         print('\033[33m' + '        2) Onda Triangular' + '\033[0m')
-        print('\033[36m' + '        3) Onda de Escalera' + '\033[0m')
+        print('\033[36m' + '        3) Onda dientes de Sierra' + '\033[0m')
         print('\033[35m' + '        4) Salir' + '\033[0m')
         print('\033[31m' + '    =============================' + '\033[0m')
         opcion = int(input("     Elije una opcion: "))
         if opcion == 1 : nombre = "Onda Cuadrada"
         if opcion == 2 : nombre = "Onda Triangular"
-        if opcion == 3 : nombre = "Onda De Escalera"
+        if opcion == 3 : nombre = "Onda Dientes de Sierra"
         if nombre == "" and opcion!= 4:
             print("Elegiste una opción incorrecta")
         elif(nombre != ""):
@@ -66,12 +66,12 @@ def ondas(x,n,tipo):
         - tipo(int): variable bandera que identifica el tipo de funcion
             1) Cuadrada.
             2) De pico
-            3) De escalera.
+            3) Dientes de sierra.
 
      >variables internas:
 
         - suma:  guarda la sumatoria para despues multiplicarla
-        
+        - signo:  alterna el signo + - para la sumatoria de la onda dientes de sierra
     >llamadas a funcion:
 
         no tiene llamadas a funcion.
@@ -80,22 +80,22 @@ def ondas(x,n,tipo):
 
         Retorna el resultado de la serie de furier(array)
     """
-    suma = 0
+    suma  = 0
+    signo = 1
     if tipo == 1:  # onda cuadrada
         for i in range(1, n+1):
             suma += (1/(2*i-1))*np.sin((2*i-1)*x)
         return ((4)/np.pi)*suma
     elif tipo == 2:  # onda triangular
-        #TODO: MODIFICAR GRAFICA NO FUNCIONA CORRECTAMENTE
-        suma = 0
-        for i in range(1, n+1):
-            if i % 2 == 0:
+        for i in range(1, n+1,2):
+            
+            if signo % 2 == 0:
                 suma -= 1/(i**2)*np.sin(i*x)
             else:
                 suma += 1/(i**2)*np.sin(i*x)
+            signo+=1
         return ((8/np.pi**2)*suma)
-    elif tipo == 3:  # onda de escalera
-        suma = 0
+    elif tipo == 3:  # onda dientes de sierra 
         for i in range(1, n+1):
             suma += (1/i)*np.sin(i*x)
         return -((2)/np.pi)*suma
