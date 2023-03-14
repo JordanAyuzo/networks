@@ -50,8 +50,8 @@ def main():
         if nombre == "" and opcion!= 4:
             print("Elegiste una opción incorrecta")
         elif(nombre != ""):
-            numeroCiclos = int (input("Ciclos que se mostraran en la grafica: "))
-            presicion = int (input("Presicion del valor de la serie de Fourier: "))
+            numeroCiclos = int (input("Rango de angulos en la grafica: "))
+            presicion = int (input("Numero de terminos para la serie de Fourier: "))
             x = np.linspace(0, 2*numeroCiclos*np.pi, 500)
             y = ondas(x,presicion,opcion)
             grafica(x,y,nombre)
@@ -70,8 +70,8 @@ def ondas(x,n,tipo):
 
      >variables internas:
 
-        - suma:  guarda la sumatoria para despues multiplicarla
-        - signo:  alterna el signo + - para la sumatoria de la onda dientes de sierra
+        - suma:(array de floats)  guarda la sumatoria para despues multiplicarla
+        - signo:(int)  alterna el signo + - para la sumatoria de la onda dientes de sierra
     >llamadas a funcion:
 
         no tiene llamadas a funcion.
@@ -88,7 +88,6 @@ def ondas(x,n,tipo):
         return ((4)/np.pi)*suma
     elif tipo == 2:  # onda triangular
         for i in range(1, n+1,2):
-            
             if signo % 2 == 0:
                 suma -= 1/(i**2)*np.sin(i*x)
             else:
@@ -105,16 +104,20 @@ def grafica(x, y, titulo):
     """
     Funcion la cual grafica usando la libreria matplotlib
     >Parámetros de entrada:
-        x(array  float) : valores en x, estan dados en n*pi.
-        y (array float) : valores evaluados en x f(x). 
-        titulo(string)  : Titulo que desea poner en la grafica.
+        - x(array  float) : valores en x, estan dados en n*pi.
+        - y (array float) : valores evaluados en x f(x). 
+        - titulo(string)  : Titulo que desea poner en la grafica.
+    >variables internas :
+        - abscisa (CONSTANTE):es el eje x que siempre es 0
     >llamadas a funcion:
         funciones(metodos) propias de la libreria matplotlib
     >valores de retorno :
         Esta funcion no retorna un valor. 
     """ 
+    ABSCISA = np.zeros_like(x)               # valores para dibujar eje x
     plt.title(titulo)                        # Agrega titulo
     plt.plot(x, y)                           # Grafica de x y y
+    plt.plot(x, ABSCISA,color='black')       # Grafica la abscisa
     plt.grid(True)                           # Agrega Cuadricula al grafico   
     plt.xlabel('x')                          # Agrega etiqueta x
     plt.ylabel('y')                          # Agrega etiqueta y
